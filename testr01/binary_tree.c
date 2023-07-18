@@ -58,8 +58,6 @@ void binary_tree_add(BinaryTree *bt, void *key, void *value)
     {
         if (bt->cmp_fn(key, current->key) == 0)
         {
-            bt->key_destroy_fn(key);
-            bt->val_destroy_fn(current->value);
             current->value = value;
         }
         if (bt->cmp_fn(key, current->key) < 0)
@@ -147,5 +145,23 @@ void *binary_tree_get(BinaryTree *bt, void *key)
 
 void binary_tree_destroy(BinaryTree *bt)
 {
-    return;
+    Node *root = bt->root;
+
+    binary_tree_destroy_recursive(root, bt->key_destroy_fn, bt->val_destroy_fn);
+
+    free(bt);
+}
+
+void binary_tree_destroy_recursive(
+    Node *node, KeyDestroyFn destroy_key, ValDestroyFn destroy_val)
+{
+    if (node == NULL)
+        return;
+
+    binary_tree_destroy_recursive(node->left, destroy_key, destroy_val);
+    binary_tree_destroy_recursive(node->right, destroy_key, destroy_val);
+    
+    destroy_key(node->key);
+    destroy_val(node->value);
+    node_destroy(node);
 }

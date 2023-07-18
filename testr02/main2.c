@@ -46,12 +46,12 @@ int cmp_fn(void *a, void *b)
 
 void key_destroy_fn(void *key)
 {
-    free(key);
+    cell_destroy(key);
 }
 
 void val_destroy_fn(void *val)
 {
-    cell_destroy(val);
+    free(val);
 }
 
 int *new_int(int idx)

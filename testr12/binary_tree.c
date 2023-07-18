@@ -1,6 +1,44 @@
 #include <stdlib.h>
 
 #include "binary_tree.h"
+#include "stack.h"
+#include "queue.h"
+
+void _inorder(Node *current, Vector *v)
+{
+    if (current == NULL)
+        return;
+    
+    KeyValPair *pair = key_val_pair_construct(current->key, current->value);
+
+    _inorder(current->left, v);
+    vector_push_back(v, pair);
+    _inorder(current->right, v);
+}
+
+void _preorder(Node *current, Vector *v)
+{
+    if (current == NULL)
+        return;
+
+    KeyValPair *pair = key_val_pair_construct(current->key, current->value);
+
+    vector_push_back(v, pair);
+    _preorder(current->left, v);
+    _preorder(current->right, v);
+}
+
+void _postorder(Node *current, Vector *v)
+{
+    if (current == NULL)
+        return;
+
+    KeyValPair *pair = key_val_pair_construct(current->key, current->value);
+
+    _postorder(current->left, v);
+    _postorder(current->right, v);
+    vector_push_back(v, pair);
+}
 
 KeyValPair *key_val_pair_construct(void *key, void *value)
 {
@@ -167,4 +205,45 @@ void binary_tree_destroy_recursive(
     destroy_key(node->key);
     destroy_val(node->value);
     node_destroy(node);
+}
+
+Vector *binary_tree_inorder_traversal(BinaryTree *bt);
+
+Vector *binary_tree_preorder_traversal(BinaryTree *bt);
+
+Vector *binary_tree_postorder_traversal(BinaryTree *bt);
+
+Vector *binary_tree_levelorder_traversal(BinaryTree *bt);
+
+Vector *binary_tree_inorder_traversal_recursive(BinaryTree *bt)
+{
+    Vector *v = vector_construct();
+
+    Node *root = bt->root;
+
+    _inorder(root, v);
+
+    return v;
+}
+
+Vector *binary_tree_preorder_traversal_recursive(BinaryTree *bt)
+{
+    Vector *v = vector_construct();
+
+    Node *root = bt->root;
+
+    _preorder(root, v);
+
+    return v;   
+}
+
+Vector *binary_tree_postorder_traversal_recursive(BinaryTree *bt)
+{
+    Vector *v = vector_construct();
+
+    Node *root = bt->root;
+
+    _postorder(root, v);
+
+    return v;
 }

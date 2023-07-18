@@ -48,6 +48,8 @@ KeyValPair *binary_tree_pop_min(BinaryTree *bt);
 KeyValPair *binary_tree_pop_max(BinaryTree *bt);
 void *binary_tree_get(BinaryTree *bt, void *key);
 void binary_tree_destroy(BinaryTree *bt);
+void binary_tree_destroy_recursive(
+    Node *node, KeyDestroyFn destroy_key, ValDestroyFn destroy_val);
 
 // a funcao abaixo pode ser util para debug, mas nao eh obrigatoria.
 // void binary_tree_print(BinaryTree *bt);
