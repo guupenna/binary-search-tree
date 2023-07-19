@@ -5,15 +5,17 @@
 typedef void *data_type;
 typedef unsigned char bool;
 
-typedef struct {
-  data_type *data;
-  int size;
-  int allocated;
+typedef struct
+{
+    data_type *data;
+    int size;
+    int allocated;
 } Vector;
 
-typedef struct {
-  Vector *v;
-  int i;
+typedef struct
+{
+    Vector *v;
+    int i;
 } VectorIterator;
 
 VectorIterator *vector_it_construct(Vector *v);
@@ -36,8 +38,7 @@ void vector_set(Vector *v, int i, data_type val);
 // Retorna o tamanho do vetor
 int vector_size(Vector *v);
 
-// Retorna o indice do primeiro elemento com valor val. Retorna -1 se nao
-// encontrado.
+// Retorna o indice do primeiro elemento com valor val. Retorna -1 se nao encontrado.
 int vector_find(Vector *v, data_type val);
 
 // Remove o i-ésimo elemento do vetor.
